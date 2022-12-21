@@ -1,0 +1,85 @@
+class Solution {
+ 
+
+
+     
+ public int reversePairs(int[] nums) { 
+     int ans[]=new int[1]; 
+     if(nums.length==0)
+     return 0;
+     int n=nums.length; 
+     
+      divide(nums,0,n-1,ans);
+      return ans[0];
+
+    }
+
+
+    
+public  void divide(int nums[],int l,int r,int ans[])
+{
+
+if(l<r)
+{
+    int m=l+(r-l)/2;
+    divide(nums,l,m,ans);
+    divide(nums,m+1,r,ans);
+   
+    int count=0;
+    int left=l;
+    int right=m+1;
+   
+
+       
+    while(left<=m)
+    {
+        if(right<=r && nums[left]>2*(long)nums[right])
+        {
+        count++;
+        right++;
+        }
+        else
+        {
+            ans[0]+=count;
+            left++;
+        }
+    }
+
+    merge(nums,l,m,r);
+}
+//System.out.print(ans);
+}
+
+public void merge(int nums[],int l,int m,int r)
+{
+    int temp[]=new int[r-l+1];
+     int i=l;
+     int j=m+1;
+     int k=0;
+
+
+    while(i<=m && j<=r)
+    {
+        if(nums[i]<nums[j])
+        {
+            temp[k++]=nums[i++];
+        }else{
+          temp[k++]=nums[j++];
+        }
+    }
+    while(i<=m)
+    {
+          temp[k++]=nums[i++];
+    }
+    while(j<=r)  {
+    temp[k++]=nums[j++];
+    }
+
+    for(i=l,k=0;k<temp.length;i++,k++){
+        nums[i]=temp[k];
+    }
+}
+
+
+
+}
